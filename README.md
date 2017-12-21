@@ -16,6 +16,29 @@
 
         cd my-app
         npm start
+- Installing type script
+
+        npm install --save-dev typescript
+        tsc --init //To generate tsconfig.json
+
+- Installing flow 
+
+        npm install --save-dev flow-bin
+        npm run flow init //To generate config
+
+- Browserify
+
+    -       # If you use npm
+            npm install --save-dev envify uglify-js uglifyify 
+
+            # If you use Yarn
+            yarn add --dev envify uglify-js uglifyify 
+
+         To create a production build, make sure that you add these transforms (the order matters):
+         
+         - The envify transform ensures the right build environment is set. Make it global (-g).
+         - The uglifyify transform removes development imports. Make it global too (-g).
+         - Finally, the resulting bundle is piped to uglify-js for mangling
 
 ## Commands 
 - **npm start**
@@ -37,13 +60,48 @@
 - it is a syntax extension to JavaScript, After compilation, JSX expressions become regular JavaScript objects
 
 ## Lifecycle Methods
+- **componentWillMount**
+
+    Invokes immediately before mounting occurs, before render()
 - **componentDidMount**
 
-    this hook runs after the component output has been rendered to the DOM
+    this hook runs after the component output has been rendered to the DOM. If you need to load data from a remote endpoint, this is a good place to instantiate the network request
 - **componentWillUnmount**
 
     This hook is called when a component is being removed from the DOM.
 
+- **shouldComponentUpdate**
+    Triggered before the re-rendering process starts
+
+        shouldComponentUpdate(nextProps, nextState) {
+            if (this.props.color !== nextProps.color) {
+                return true;
+            }
+            if (this.state.count !== nextState.count) {
+                return true;
+            }
+            return false;
+        }
+
+- **componentWillReceiveProps**
+
+    Invokes before a mounted component receives new props. If you need to update the state in response to prop changes (for example, to reset it), you may compare this.props and nextProps and perform state transitions using this.setState() in this method
+
+- **shouldComponentUpdate**
+
+    Let React know if a component’s output is not affected by the current change in state or props.
+
+- **componentWillUpdate**
+
+    Invokes immediately before rendering when new props or state are being received.
+
+- **componentDidUpdate**
+
+    Invokes immediately after updating occurs.
+
+- **componentDidCatch**
+
+    Error boundaries catch errors during rendering.
 ## Using State Correctly
 -  **Do Not Modify State Directly**
 
@@ -104,27 +162,95 @@
             }
     - so this.setState({comments}) leaves this.state.posts intact, but completely replaces this.state.comments
 
-## **inline If with Logical && Operator**
+## **Lists and Keys**
+- Rendering Multiple Components
 
-- You may embed any expressions in JSX by wrapping them in curly braces. This includes the JavaScript logical && operator
+    You can build collections of elements and include them in JSX using curly braces
 
-        function Mailbox(props) {
-            const unreadMessages = props.unreadMessages;
-            return (
-                <div>
-                <h1>Hello!</h1>
-                {unreadMessages.length > 0 &&
-                    <h2>
-                    You have {unreadMessages.length} unread messages.
-                    </h2>
-                }
-                </div>
+    -
+            const numbers = [1, 2, 3, 4, 5];
+            const listItems = numbers.map((number) =>
+                <li>{number}</li>
             );
-        }
 
-        const messages = ['React', 'Re: React', 'Re:Re: React'];
-        ReactDOM.render(
-            <Mailbox unreadMessages={messages} />,
-            document.getElementById('root')
-        );
-- It works because in JavaScript, **true && expression** always evaluates to **expression**, and **false && expression** always evaluates to **false**.
+            ReactDOM.render(
+                <ul>{listItems}</ul>,
+                document.getElementById('root')
+            );
+
+    - Basic List Component
+
+            function NumberList(props) {
+                const numbers = props.numbers;
+                const listItems = numbers.map((number) =>
+                    <li key={number.toString()}>
+                    {number}
+                    </li>
+                );
+                return (
+                    <ul>{listItems}</ul>
+                );
+            }
+
+            const numbers = [1, 2, 3, 4, 5];
+            ReactDOM.render(
+                <NumberList numbers={numbers} />,
+                document.getElementById('root')
+            );
+
+        - A “key” is a special string attribute you need to include when creating lists of elements
+        - Keys help React identify which items have changed, are added, or are removed
+
+
+## **Conditional Rendering**
+- **inline If with Logical && Operator**
+
+    - You may embed any expressions in JSX by wrapping them in curly braces. This includes the JavaScript logical && operator
+
+            function Mailbox(props) {
+                const unreadMessages = props.unreadMessages;
+                return (
+                    <div>
+                    <h1>Hello!</h1>
+                    {unreadMessages.length > 0 &&
+                        <h2>
+                        You have {unreadMessages.length} unread messages.
+                        </h2>
+                    }
+                    </div>
+                );
+            }
+
+            const messages = ['React', 'Re: React', 'Re:Re: React'];
+            ReactDOM.render(
+                <Mailbox unreadMessages={messages} />,
+                document.getElementById('root')
+            );
+    - It works because in JavaScript, **true && expression** always evaluates to **expression**, and **false && expression** always evaluates to **false**.
+
+- **Inline If-Else with Conditional Operator**
+
+    - conditionally rendering elements inline is to use the JavaScript conditional operator **condition ? true : false**
+
+            render() {
+                const isLoggedIn = this.state.isLoggedIn;
+                return (
+                    <div>
+                    The user is <b>{isLoggedIn ? 'currently' : 'not'}</b> logged in.
+                    </div>
+                );
+            }
+            -----------------------------------
+            render() {
+                const isLoggedIn = this.state.isLoggedIn;
+                return (
+                    <div>
+                    {isLoggedIn ? (
+                        <LogoutButton onClick={this.handleLogoutClick} />
+                    ) : (
+                        <LoginButton onClick={this.handleLoginClick} />
+                    )}
+                    </div>
+                );
+            }
+
