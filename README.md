@@ -56,6 +56,28 @@
 
     Removes this tool and copies build dependencies, configuration files and scripts into the app directory. If you do this, you can’t go back!
 
+## Addind scss
+
+- Install sass package
+
+        npm install --save node-sass-chokidar
+
+- In **package.json** add the following lines to scripts
+
+        "scripts": {
+            "build-css": "node-sass-chokidar src/ -o src/",</pre>
+            "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+            "start": "react-scripts start",
+            "build": "react-scripts build",
+            "test": "react-scripts test --env=jsdom",
+
+- Rename **.css** files to **.scc**
+- run **npm run watch-css**, watcher will find every Sass file in src subdirectories, and create a corresponding CSS file next to it.
+- To enable importing files without using relative paths, you can add the **--include-path** option to the command in **package.json**.
+
+        "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+        "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+
 ## JSX
 - it is a syntax extension to JavaScript, After compilation, JSX expressions become regular JavaScript objects
 
