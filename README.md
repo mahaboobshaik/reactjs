@@ -65,8 +65,8 @@
 - In **package.json** add the following lines to scripts
 
         "scripts": {
-            "build-css": "node-sass-chokidar src/ -o src/",</pre>
-            "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
+        +    "build-css": "node-sass-chokidar src/ -o src/",</pre>
+        +    "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
             "start": "react-scripts start",
             "build": "react-scripts build",
             "test": "react-scripts test --env=jsdom",
