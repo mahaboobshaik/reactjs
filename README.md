@@ -78,6 +78,11 @@
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
 
+## Adding Routing Module
+
+        npm install react-router-dom --save
+        
+
 ## JSX
 - it is a syntax extension to JavaScript, After compilation, JSX expressions become regular JavaScript objects
 
