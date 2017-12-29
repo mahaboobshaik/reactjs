@@ -55,6 +55,14 @@
 - **npm run eject**
 
     Removes this tool and copies build dependencies, configuration files and scripts into the app directory. If you do this, you can’t go back!
+## Adding Routing Module
+
+        npm install react-router-dom --save
+        
+## Adding homepage for production build
+- In **package.json** add homepage link, so that in production build it will change all the internal links according to production location
+
+        "homepage": "http://localhost/reactt/build"
 
 ## Addind scss
 
@@ -78,10 +86,6 @@
         "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
         "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
 
-## Adding Routing Module
-
-        npm install react-router-dom --save
-        
 
 ## JSX
 - it is a syntax extension to JavaScript, After compilation, JSX expressions become regular JavaScript objects
