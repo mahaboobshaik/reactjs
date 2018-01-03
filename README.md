@@ -285,3 +285,57 @@
                 );
             }
 
+## **Sample codes**
+
+- active class in list
+
+        render() {
+            return (
+                <elementslist>
+                {
+                    this.props.listData.map(function(ele, index) {
+                        const className = thisVeiw.state.activeIndex === index ? 'each_element active' : 'each_element';  
+                        return (<div className={className} key={'project_list'+index} onClick={() => thisVeiw.handleOnclick(index)}>
+                                    <span>{ele.details}</span>
+                                </div>);
+                    })
+                }
+                </elementslist>
+            );
+        }
+
+- onhover update image src
+
+        handleMouseOver(ele) {
+            if(ele === 'add')
+                this.setState({imgSrcAdd: new_image});
+        }
+
+        handleMouseOut(ele) {
+            if(ele === 'add')
+                this.setState({imgSrcAdd: image});
+        }
+
+        <img className="add_project" onMouseOver={() => this.handleMouseOver('add')} onMouseOut={() => this.handleMouseOut('add')} src={this.state.imgSrcAdd} alt="Add Project"/>
+
+
+- Routing
+
+        import { BrowserRouter as Router, Route, NavLink, Redirect, Switch } from 'react-router-dom';
+
+        const baseRoute = ""; //"/demo/build";
+
+        <Router>
+            <routing>
+                <nav className="main_navigation">
+                    <NavLink exact to={`${baseRoute}/`} >Home</NavLink>
+                    <NavLink to={`${baseRoute}/project`} >Project</NavLink>
+                </nav>
+                <Switch>
+                    <Route exact path={`${baseRoute}/`} component={Home} />
+                    <Route path={`${baseRoute}/project/:projectId`} component={ProjectDetails} />
+                    <Route path={`${baseRoute}/project`} component={Project} />
+                    <Redirect to={`${baseRoute}/`} />
+                </Switch>
+            </routing>
+        </Router>
