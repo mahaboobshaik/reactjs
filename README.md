@@ -133,6 +133,13 @@
 - **componentDidCatch**
 
     Error boundaries catch errors during rendering.
+
+## Echarts
+
+        npm install --save echarts-for-react 
+
+- [link](https://www.npmjs.com/package/echarts-for-react)
+
 ## Using State Correctly
 -  **Do Not Modify State Directly**
 
