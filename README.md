@@ -346,3 +346,47 @@
                 </Switch>
             </routing>
         </Router>
+
+- Data Fetch
+
+    - Fetch
+
+            fetch('url', {
+                 headers: {
+                         'Accept': 'application/json, application/xml, text/plain, text/html, *.*',
+                         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+                         },
+                 method: 'post',
+                 body: qs.stringify({
+                     param1: 'param1',
+                     param2: 'param3',
+                     param2: 'param3'
+                 })
+             }).then(function(response) {
+                 return response.json();
+             }).then(function(data) {
+                 console.log(data);
+             });
+    - Axios
+
+            if(this.CancelToken)
+                this.CancelToken.cancel();
+
+            this.CancelToken = axios.CancelToken.source();
+            var thisView = this;
+            axios({
+                cancelToken: thisView.CancelToken.token,
+                requestId: 'user',
+                cancelPreviousRequest: true,
+                method: 'post',
+                url: 'url',
+                data: qs.stringify({
+                        param1: 'param1',
+                        param2: 'param3',
+                        param2: 'param3'
+                    })
+            }).then(function (res) {
+                console.log('Request was successful');
+            }).catch(function (res) {
+                console.log('An error occurred');
+            });
