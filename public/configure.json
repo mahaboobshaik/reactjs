@@ -1,0 +1,6 @@
+{
+    "dev" : true,
+    "appName" : "Tool Name",
+    "api" : "http://localhost/tool/api.php",
+    "under_maintenance": false
+}
